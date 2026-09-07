@@ -172,6 +172,28 @@
         </div>
       </article>
 
+      <article class="card" data-loop="ASC_02_Ascension-Portrait">
+        <div class="card-media"><img loading="lazy" src="art/ASC_02_Ascension-Portrait.jpg" alt="Mary Taken Into Heavenly Glory"></div>
+        <div class="card-body">
+          <span class="meta">Marian Devotional</span>
+          <h3>Mary Taken Into Heavenly Glory</h3>
+          <div class="buys">
+            <a class="btn btn-sm" href="https://www.redbubble.com/people/EdenInfiniteArt/works/183149804" target="_blank" rel="noopener">Prints &amp; gifts</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-loop="ASC_01_Ascension-Landscape">
+        <div class="card-media"><img loading="lazy" src="art/ASC_01_Ascension-Landscape.jpg" alt="The Assumption — landscape"></div>
+        <div class="card-body">
+          <span class="meta">Marian Devotional &middot; Landscape</span>
+          <h3>The Assumption (Landscape)</h3>
+          <div class="buys">
+            <a class="btn btn-sm" href="https://www.redbubble.com/people/EdenInfiniteArt/shop" target="_blank" rel="noopener">See the shop</a>
+          </div>
+        </div>
+      </article>
+
       <article class="card" data-loop="MAR_01_Veiled-Portrait">
         <div class="card-media"><img loading="lazy" src="art/MAR_01_Veiled-Portrait.jpg" alt="Madonna Veiled"></div>
         <div class="card-body">
@@ -313,11 +335,12 @@
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
 
-/* Animated artwork — hover to play.
-   Drop a silent 2–5s loop at loops/<data-loop>.mp4 and that card starts
-   animating on hover. No code change needed; cards with no loop file stay still.
-   Desktop: plays on hover, resets on leave.
-   Touch (no hover): plays while the card is on screen, pauses when it leaves. */
+/* Animated artwork — play once on hover, then settle back to the artwork.
+   Drop a silent ~2s clip at loops/<data-loop>.mp4 and that card animates once
+   when hovered, then returns to the still so the buyer sees what they're buying.
+   Frame 0 of each clip IS the artwork (it's the render keyframe), so resetting
+   to 0 restores the image exactly. No looping, so no seam to hide.
+   Cards with no clip stay as plain stills. */
 (function () {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const canHover = window.matchMedia('(hover: hover)').matches;
@@ -334,26 +357,31 @@ document.getElementById('yr').textContent = new Date().getFullYear();
       const v = document.createElement('video');
       v.src = 'loops/' + id + '.mp4';
       v.poster = still.getAttribute('src');
-      v.loop = true; v.muted = true; v.preload = 'none';
+      v.loop = false;                 // play once — never reverse, never repeat
+      v.muted = true; v.preload = 'metadata';
       v.playsInline = true;
       v.setAttribute('playsinline', '');
       v.setAttribute('muted', '');
       v.setAttribute('aria-label', still.alt);
       slot.replaceChild(v, still);
-      card.classList.add('has-loop');
+      card.classList.add('has-clip');
 
-      const play  = () => { v.play().catch(() => {}); };
-      const stop  = () => { v.pause(); v.currentTime = 0; };
+      const reset = () => { v.pause(); try { v.currentTime = 0; } catch (e) {} };
+      const play  = () => { try { v.currentTime = 0; } catch (e) {} v.play().catch(() => {}); };
+
+      v.addEventListener('ended', reset);   // settle back on the artwork
 
       if (canHover) {
         card.addEventListener('mouseenter', play);
-        card.addEventListener('mouseleave', stop);
+        card.addEventListener('mouseleave', reset);
         card.addEventListener('focusin',  play);
-        card.addEventListener('focusout', stop);
+        card.addEventListener('focusout', reset);
       } else {
+        /* No hover on touch: play once the first time the card comes into view. */
+        let seen = false;
         const io = new IntersectionObserver(es => {
-          es.forEach(e => e.isIntersecting ? play() : stop());
-        }, { threshold: 0.55 });
+          es.forEach(e => { if (e.isIntersecting && !seen) { seen = true; play(); } });
+        }, { threshold: 0.6 });
         io.observe(card);
       }
     }).catch(() => {});
