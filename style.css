@@ -1,0 +1,167 @@
+/* Eden Infinite Art — palette drawn from the cathedral-at-sunset banner:
+   molten gold, amethyst wisteria, warm stone, twilight plum. Never flat black. */
+
+:root{
+  --ink:          #120e1c;   /* deepest twilight, page floor */
+  --ink-2:        #1b1430;   /* raised surface */
+  --ink-3:        #241a3e;   /* card */
+  --plum:         #2e2050;
+  --gold:         #e6b25c;
+  --gold-bright:  #f7dca4;
+  --gold-deep:    #b87f34;
+  --amethyst:     #a98fdd;
+  --amethyst-dim: #7d64ad;
+  --cream:        #f4ebe0;
+  --cream-dim:    #cfc2b6;
+  --rule:         rgba(230,178,92,.22);
+  --shadow:       0 18px 50px rgba(0,0,0,.55);
+  --wrap:         1240px;
+  --serif:        "Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:         "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--cream);
+  background:
+    radial-gradient(1200px 700px at 50% -8%, rgba(230,178,92,.10), transparent 62%),
+    radial-gradient(900px 620px at 12% 26%, rgba(169,143,221,.10), transparent 60%),
+    radial-gradient(900px 620px at 88% 62%, rgba(184,127,52,.08), transparent 60%),
+    linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 44%, #0d0a16 100%);
+  background-attachment:fixed;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img,video{max-width:100%;display:block}
+a{color:var(--gold);text-decoration:none}
+a:hover{color:var(--gold-bright)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.hero-media{position:relative;width:100%;aspect-ratio:2508/627;min-height:340px;overflow:hidden}
+.hero-media img,.hero-media video{width:100%;height:100%;object-fit:cover;object-position:center 42%}
+.hero-media::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg, rgba(18,14,28,.30) 0%, rgba(18,14,28,0) 26%, rgba(18,14,28,.42) 66%, var(--ink-2) 100%),
+    radial-gradient(70% 100% at 50% 100%, rgba(18,14,28,.55), transparent 70%);
+}
+.hero-inner{
+  position:relative;z-index:2;margin-top:-118px;padding-bottom:56px;text-align:center;
+}
+.crest{width:96px;height:96px;margin:0 auto 14px;border-radius:50%;
+  background:radial-gradient(circle at 50% 35%, rgba(247,220,164,.30), rgba(18,14,28,.9) 70%);
+  border:1px solid var(--rule);display:grid;place-items:center;box-shadow:var(--shadow);overflow:hidden}
+.crest img{width:74%;height:74%;object-fit:contain}
+h1.brand{
+  font-family:var(--serif);font-weight:600;letter-spacing:.055em;
+  font-size:clamp(2.5rem,6.4vw,4.6rem);line-height:1.02;margin:.18em 0 .1em;
+  background:linear-gradient(180deg,var(--gold-bright) 0%,var(--gold) 46%,var(--gold-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 2px 30px rgba(230,178,92,.16);
+}
+.eyebrow{
+  display:inline-block;font-size:.74rem;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--amethyst);margin-bottom:.5em;
+}
+.tagline{
+  font-family:var(--serif);font-size:clamp(1.15rem,2.3vw,1.6rem);font-style:italic;
+  color:var(--cream);opacity:.94;max-width:44ch;margin:.2em auto 1.3em;line-height:1.42;
+}
+
+/* ---------- BUTTONS ---------- */
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn{
+  display:inline-flex;align-items:center;gap:.55em;
+  font-size:.86rem;letter-spacing:.11em;text-transform:uppercase;font-weight:600;
+  padding:.82em 1.5em;border-radius:2px;border:1px solid var(--rule);
+  color:var(--cream);background:rgba(46,32,80,.5);backdrop-filter:blur(6px);
+  transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease;
+}
+.btn:hover{transform:translateY(-2px);border-color:var(--gold);color:var(--gold-bright);background:rgba(70,48,120,.55)}
+.btn-gold{
+  background:linear-gradient(180deg,var(--gold-bright),var(--gold) 58%,var(--gold-deep));
+  color:#241703;border-color:transparent;
+}
+.btn-gold:hover{color:#180f02;filter:brightness(1.07)}
+.btn-sm{font-size:.72rem;padding:.6em 1.05em;letter-spacing:.09em}
+
+/* ---------- SECTIONS ---------- */
+section{padding:76px 0}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--rule) 22%,var(--rule) 78%,transparent);border:0;margin:0}
+h2{
+  font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,3.7vw,2.9rem);
+  letter-spacing:.03em;margin:0 0 .18em;color:var(--gold-bright);
+}
+.section-sub{color:var(--cream-dim);max-width:62ch;margin:0 0 2.4em;font-size:1.02rem}
+.section-head{text-align:center}
+.section-head .section-sub{margin-left:auto;margin-right:auto}
+
+/* ---------- STATEMENT ---------- */
+.statement p{font-size:1.1rem;color:var(--cream-dim);max-width:66ch}
+.statement p strong{color:var(--cream);font-weight:600}
+.statement .lead{
+  font-family:var(--serif);font-size:clamp(1.35rem,2.6vw,1.85rem);
+  color:var(--cream);font-style:italic;line-height:1.44;margin-bottom:1.1em;
+}
+
+/* ---------- GALLERY ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:30px}
+.card{
+  background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
+  border:1px solid rgba(230,178,92,.14);border-radius:3px;overflow:hidden;
+  display:flex;flex-direction:column;box-shadow:var(--shadow);
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.card:hover{transform:translateY(-5px);border-color:rgba(230,178,92,.42);box-shadow:0 24px 60px rgba(0,0,0,.6)}
+/* the animated slot: a still now, a 2–5s silent loop when a file lands in /loops */
+.card-media{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--plum)}
+.card-media img,.card-media video{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.card:hover .card-media img{transform:scale(1.035)}
+.card-media::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent 58%,rgba(18,14,28,.72) 100%)}
+/* cards that have a loop file get a quiet "hover to play" cue */
+.card.has-loop .card-media::before{
+  content:"▶ hover";position:absolute;z-index:2;left:12px;top:12px;
+  font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+  padding:.42em .7em;border-radius:2px;color:var(--gold-bright);
+  background:rgba(18,14,28,.62);border:1px solid var(--rule);
+  backdrop-filter:blur(4px);opacity:.85;transition:opacity .2s ease;
+}
+.card.has-loop:hover .card-media::before{opacity:0}
+.card-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.card h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;margin:0;color:var(--cream);letter-spacing:.015em}
+.card .meta{font-size:.73rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amethyst)}
+.card .buys{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+
+/* ---------- WHERE TO BUY ---------- */
+.shops{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.shop{
+  border:1px solid var(--rule);border-radius:3px;padding:30px 26px;text-align:center;
+  background:linear-gradient(180deg,rgba(46,32,80,.42),rgba(27,20,48,.42));
+}
+.shop h3{font-family:var(--serif);font-size:1.5rem;margin:0 0 .3em;color:var(--gold-bright)}
+.shop p{color:var(--cream-dim);font-size:.95rem;margin:0 0 1.4em;min-height:3em}
+.shop.soon{opacity:.62}
+.shop .badge{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amethyst-dim)}
+
+/* ---------- FOOTER ---------- */
+footer{padding:52px 0 64px;border-top:1px solid var(--rule);background:rgba(13,10,22,.6);text-align:center}
+footer .sig{font-family:var(--serif);font-size:1.3rem;color:var(--gold);letter-spacing:.05em}
+footer p{color:var(--cream-dim);font-size:.86rem;margin:.5em 0}
+footer .fine{opacity:.62;font-size:.78rem;max-width:60ch;margin-left:auto;margin-right:auto}
+
+@media (max-width:640px){
+  .hero-media{aspect-ratio:16/10}
+  .hero-inner{margin-top:-70px}
+  section{padding:54px 0}
+  .grid{gap:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;scroll-behavior:auto!important}
+  .card-media video{display:none}
+}
