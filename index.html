@@ -342,7 +342,10 @@ document.getElementById('yr').textContent = new Date().getFullYear();
    to 0 restores the image exactly. No looping, so no seam to hide.
    Cards with no clip stay as plain stills. */
 (function () {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  /* Reduced motion: this stops INVOLUNTARY movement, so it disables the
+     automatic play-on-scroll path below. A clip the visitor deliberately
+     hovers, that plays once and stops, stays available to everyone. */
+  const reduced  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const canHover = window.matchMedia('(hover: hover)').matches;
 
   document.querySelectorAll('.card[data-loop]').forEach(card => {
@@ -376,13 +379,17 @@ document.getElementById('yr').textContent = new Date().getFullYear();
         card.addEventListener('mouseleave', reset);
         card.addEventListener('focusin',  play);
         card.addEventListener('focusout', reset);
-      } else {
-        /* No hover on touch: play once the first time the card comes into view. */
+      } else if (!reduced) {
+        /* No hover on touch: play once the first time the card comes into view.
+           Skipped under reduced motion, since nobody asked for this one. */
         let seen = false;
         const io = new IntersectionObserver(es => {
           es.forEach(e => { if (e.isIntersecting && !seen) { seen = true; play(); } });
         }, { threshold: 0.6 });
         io.observe(card);
+      } else {
+        /* Touch + reduced motion: give them a tap to start it themselves. */
+        card.addEventListener('click', () => { v.paused ? play() : reset(); });
       }
     }).catch(() => {});
   });

@@ -165,5 +165,7 @@ footer .fine{opacity:.62;font-size:.78rem;max-width:60ch;margin-left:auto;margin
 }
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;scroll-behavior:auto!important}
-  .card-media video{display:none}
+  /* The clip stays available — it only plays when the visitor asks for it.
+     Hiding it here was wrong: it made hover-to-play invisible to anyone
+     with Reduce Motion switched on. */
 }
