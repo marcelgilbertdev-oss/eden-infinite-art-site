@@ -53,10 +53,12 @@ a:hover{color:var(--gold-bright)}
 .hero-inner{
   position:relative;z-index:2;margin-top:-118px;padding-bottom:56px;text-align:center;
 }
-.crest{width:96px;height:96px;margin:0 auto 14px;border-radius:50%;
-  background:radial-gradient(circle at 50% 35%, rgba(247,220,164,.30), rgba(18,14,28,.9) 70%);
-  border:1px solid var(--rule);display:grid;place-items:center;box-shadow:var(--shadow);overflow:hidden}
-.crest img{width:74%;height:74%;object-fit:contain}
+/* The mark sits on the page as itself - no circular frame, no plate.
+   The source art is a cream square with no alpha, so logo.png is a keyed
+   transparent version (brush recoloured cream, gold centre kept). */
+.crest{width:104px;height:104px;margin:0 auto 10px;display:grid;place-items:center}
+.crest img{width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 4px 22px rgba(18,14,28,.75)) drop-shadow(0 0 14px rgba(230,178,92,.18))}
 h1.brand{
   font-family:var(--serif);font-weight:600;letter-spacing:.055em;
   font-size:clamp(2.5rem,6.4vw,4.6rem);line-height:1.02;margin:.18em 0 .1em;
