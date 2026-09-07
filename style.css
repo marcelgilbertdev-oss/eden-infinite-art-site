@@ -122,7 +122,15 @@ h2{
 .card:hover{transform:translateY(-5px);border-color:rgba(230,178,92,.42);box-shadow:0 24px 60px rgba(0,0,0,.6)}
 /* the animated slot: a still now, a 2–5s silent loop when a file lands in /loops */
 .card-media{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--plum)}
-.card-media img,.card-media video{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.card-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+/* The clip is layered OVER the still and only shown while it plays, so a video
+   that fails to load or paint can never leave the card blank. */
+.card-media video{
+  position:absolute;inset:0;z-index:1;
+  width:100%;height:100%;object-fit:cover;
+  opacity:0;pointer-events:none;transition:opacity .18s ease;
+}
+.card-media video.is-playing{opacity:1}
 .card:hover .card-media img{transform:scale(1.035)}
 .card-media::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(180deg,transparent 58%,rgba(18,14,28,.72) 100%)}

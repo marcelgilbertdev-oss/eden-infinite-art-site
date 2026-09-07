@@ -34,7 +34,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="style.css?v=20260907a">
+<link rel="stylesheet" href="style.css?v=20260907c">
 </head>
 <body>
 
@@ -357,20 +357,30 @@ document.getElementById('yr').textContent = new Date().getFullYear();
     fetch('loops/' + id + '.mp4', { method: 'HEAD' }).then(r => {
       if (!r.ok) return;
 
+      /* The still stays in the DOM as a real <img>. The clip is layered over
+         it and only becomes visible while playing. If the video ever fails to
+         load, decode or paint, the card still shows the artwork. */
       const v = document.createElement('video');
       v.src = 'loops/' + id + '.mp4';
-      v.poster = still.getAttribute('src');
       v.loop = false;                 // play once — never reverse, never repeat
       v.muted = true; v.preload = 'metadata';
       v.playsInline = true;
       v.setAttribute('playsinline', '');
       v.setAttribute('muted', '');
-      v.setAttribute('aria-label', still.alt);
-      slot.replaceChild(v, still);
+      v.setAttribute('aria-hidden', 'true');
+      v.tabIndex = -1;
+      slot.appendChild(v);
       card.classList.add('has-clip');
 
-      const reset = () => { v.pause(); try { v.currentTime = 0; } catch (e) {} };
-      const play  = () => { try { v.currentTime = 0; } catch (e) {} v.play().catch(() => {}); };
+      const reset = () => {
+        v.classList.remove('is-playing');
+        v.pause();
+        try { v.currentTime = 0; } catch (e) {}
+      };
+      const play = () => {
+        try { v.currentTime = 0; } catch (e) {}
+        v.play().then(() => v.classList.add('is-playing')).catch(() => {});
+      };
 
       v.addEventListener('ended', reset);   // settle back on the artwork
 
